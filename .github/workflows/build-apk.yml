@@ -44,7 +44,7 @@ jobs:
             > "$HOME/.config/godot/editor_settings-4.3.tres"
 
       - name: Export APK with firebelley/godot-export
-        uses: firebelley/godot-export@v5
+        uses: firebelley/godot-export@v4
         with:
           godot_executable_download_url: https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_linux.x86_64.zip
           godot_export_templates_download_url: https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_export_templates.tpz
