@@ -75,10 +75,25 @@ jobs:
       - name: Import project
         run: godot --headless --path . --import || true
 
+      - name: Diagnose Android/Java setup
+        run: |
+          echo "--- editor settings ---"
+          cat "$HOME/.config/godot/editor_settings-${GODOT_VERSION}.tres"
+          echo "--- SDK ---"
+          ls "$ANDROID_HOME" || true
+          ls "$ANDROID_HOME/build-tools" || true
+          ls "$ANDROID_HOME/platforms" || true
+          ls "$ANDROID_HOME/platform-tools" | head -n 5 || true
+          echo "--- Java ---"
+          java -version 2>&1 || true
+          ls "$JAVA_HOME/bin" | tr '\n' ' ' || true
+          echo; echo "--- keystore ---"
+          ls -la "$HOME/debug.keystore" || true
+
       - name: Export APK
         run: |
           mkdir -p build
-          godot --headless --path . --export-debug "Android" build/game-a.apk
+          godot --headless --verbose --path . --export-debug "Android" build/game-a.apk
 
       - uses: actions/upload-artifact@v4
         with:
