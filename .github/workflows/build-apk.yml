@@ -46,6 +46,21 @@ jobs:
             'export/android/debug_keystore_pass = "android"' \
             > "$HOME/.config/godot/editor_settings-4.3.tres"
 
+      - name: Write Android settings to both Godot settings filenames
+        run: |
+          mkdir -p "$HOME/.config/godot"
+          for v in 4 4.3; do
+            printf '%s\n' \
+              '[gd_resource type="EditorSettings" format=3]' '' '[resource]' \
+              "export/android/android_sdk_path = \"$ANDROID_HOME\"" \
+              "export/android/java_sdk_path = \"$JAVA_HOME\"" \
+              "export/android/debug_keystore = \"$HOME/debug.keystore\"" \
+              'export/android/debug_keystore_user = "androiddebugkey"' \
+              'export/android/debug_keystore_pass = "android"' \
+              > "$HOME/.config/godot/editor_settings-$v.tres"
+          done
+          for f in "$HOME"/.config/godot/*.tres; do echo "== $f"; cat "$f"; done
+
       - name: Export APK with firebelley/godot-export
         uses: firebelley/godot-export@master
         with:
