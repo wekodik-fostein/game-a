@@ -56,6 +56,12 @@ jobs:
           use_preset_export_path: true
           cache: true
 
+      - name: Show Godot editor settings after export
+        if: always()
+        run: |
+          for f in "$HOME"/.config/godot/*.tres; do echo "== $f"; grep -i "android\|keystore\|java" "$f" || true; done
+          ls -la "$HOME"/.local/share/godot/builds/Android/ || true
+
       - name: Collect APK
         run: |
           mkdir -p build
