@@ -1,6 +1,9 @@
 name: Minimal Android export test
 
 on:
+  push:
+    branches: [main]
+    paths: ['minimal/**', '.github/workflows/minimal-test.yml']
   workflow_dispatch:
 
 jobs:
