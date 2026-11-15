@@ -3,3 +3,5 @@ build/
 *.apk
 *.keystore
 *.aab
+android/build/
+android/.build_version

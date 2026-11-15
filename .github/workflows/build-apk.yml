@@ -44,6 +44,13 @@ jobs:
           unzip -q templates.tpz -d tpl_tmp
           mv tpl_tmp/templates/* "$TPL_DIR/"
 
+      - name: Unpack Android Gradle build template into the project
+        run: |
+          TPL_DIR="$HOME/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_STATUS}"
+          mkdir -p android/build
+          unzip -q "$TPL_DIR/android_source.zip" -d android/build
+          echo "${GODOT_VERSION}.${GODOT_STATUS}" > android/.build_version
+
       - name: Create debug keystore and point Godot at SDK, JDK and keystore
         run: |
           keytool -genkeypair -v -keystore "$HOME/debug.keystore" -storepass android -keypass android \
