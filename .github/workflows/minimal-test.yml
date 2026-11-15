@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ANDROID_HOME: /usr/local/lib/android/sdk
-      GODOT_URL: https://github.com/godotengine/godot/releases/download/4.3-stable
+      GODOT_URL: https://github.com/godotengine/godot/releases/download/4.4-stable
     steps:
       - uses: actions/checkout@v4
 
@@ -28,14 +28,14 @@ jobs:
 
       - name: Install Godot 4.3 and export templates
         run: |
-          mkdir -p "$HOME/bin" "$HOME/.local/share/godot/export_templates/4.3.stable"
-          curl -fsSL -o godot.zip "$GODOT_URL/Godot_v4.3-stable_linux.x86_64.zip"
+          mkdir -p "$HOME/bin" "$HOME/.local/share/godot/export_templates/4.4.stable"
+          curl -fsSL -o godot.zip "$GODOT_URL/Godot_v4.4-stable_linux.x86_64.zip"
           unzip -q -o godot.zip -d godot_bin
-          mv godot_bin/Godot_v4.3-stable_linux.x86_64 "$HOME/bin/godot"
+          mv godot_bin/Godot_v4.4-stable_linux.x86_64 "$HOME/bin/godot"
           chmod +x "$HOME/bin/godot"
-          curl -fsSL -o templates.tpz "$GODOT_URL/Godot_v4.3-stable_export_templates.tpz"
+          curl -fsSL -o templates.tpz "$GODOT_URL/Godot_v4.4-stable_export_templates.tpz"
           unzip -q templates.tpz -d tpl_tmp
-          mv tpl_tmp/templates/* "$HOME/.local/share/godot/export_templates/4.3.stable/"
+          mv tpl_tmp/templates/* "$HOME/.local/share/godot/export_templates/4.4.stable/"
           echo "$HOME/bin" >> "$GITHUB_PATH"
 
       - name: Create debug keystore and Android settings for both Godot filenames
@@ -48,7 +48,7 @@ jobs:
             'keystore/debug_user="androiddebugkey"' \
             'keystore/debug_password="android"' >> minimal/export_presets.cfg
           mkdir -p "$HOME/.config/godot"
-          for v in 4 4.3; do
+          for v in 4 4.4; do
             printf '%s\n' \
               '[gd_resource type="EditorSettings" format=3]' '' '[resource]' \
               "export/android/android_sdk_path = \"$ANDROID_HOME\"" \
