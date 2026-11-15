@@ -32,7 +32,10 @@ jobs:
           printf '%s\n' \
             "keystore/debug=\"$HOME/debug.keystore\"" \
             'keystore/debug_user="androiddebugkey"' \
-            'keystore/debug_password="android"' >> export_presets.cfg
+            'keystore/debug_password="android"' \
+            "keystore/release=\"$HOME/debug.keystore\"" \
+            'keystore/release_user="androiddebugkey"' \
+            'keystore/release_password="android"' >> export_presets.cfg
           mkdir -p "$HOME/.config/godot"
           printf '%s\n' \
             '[gd_resource type="EditorSettings" format=3]' '' '[resource]' \
@@ -52,6 +55,12 @@ jobs:
           archive_output: false
           use_preset_export_path: true
           cache: true
+
+      - name: Collect APK
+        run: |
+          mkdir -p build
+          cp "$HOME"/.local/share/godot/builds/Android/*.apk build/game-a.apk
+          ls -la build
 
       - uses: actions/upload-artifact@v4
         with:
